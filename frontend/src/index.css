@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5e9da;
+  color: #6b4f3a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Marquee Animation */
+.marquee-container {
+  overflow: hidden;
+  background: linear-gradient(135deg, #8b6f47 0%, #a0825d 100%);
+  padding: 30px 0;
+  position: relative;
+}
+
+.marquee-wrapper {
+  display: flex;
+  animation: marquee 50s linear infinite;
+  gap: 30px;
+  padding: 0 30px;
+}
+
+.marquee-item {
+  flex-shrink: 0;
+  width: 280px;
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  background: white;
+  transition: transform 0.3s ease;
+}
+
+.marquee-item:hover {
+  transform: translateY(-4px);
+}
+
+.marquee-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hover Effects */
+.card-hover {
+  transition: all 0.3s ease-in-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(107, 79, 58, 0.1);
+}
+
+/* Interactive Carousel */
+.interactive-carousel-container {
+  background: linear-gradient(135deg, #D4A54F 0%, #E8C4A0 100%);
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.interactive-carousel-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  position: relative;
+}
+
+.carousel-button {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #5a7d7c;
+  background: white;
+  color: #5a7d7c;
+  font-size: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.carousel-button:hover {
+  background: #5a7d7c;
+  color: white;
+  transform: scale(1.1);
+}
+
+.carousel-button:active {
+  transform: scale(0.95);
+}
+
+.carousel-image-container {
+  width: 100%;
+  max-width: 700px;
+  height: 480px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: white;
+  width: 14px;
+  height: 14px;
+}
+
+.carousel-dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Hover Effects */
+
+/* Button Styles */
+.btn-primary {
+  @apply px-6 py-2 bg-brown text-sand rounded-lg font-semibold transition-all duration-300 hover:bg-opacity-90 active:scale-95;
+}
+
+.btn-secondary {
+  @apply px-6 py-2 bg-forest-green text-white rounded-lg font-semibold transition-all duration-300 hover:bg-opacity-90 active:scale-95;
+}
+
+.btn-whatsapp {
+  @apply px-4 py-2 bg-green-500 text-white rounded-lg font-semibold transition-all duration-300 hover:bg-green-600 active:scale-95 flex items-center gap-2;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carousel-button {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+  }
+
+  .carousel-image-container {
+    height: 350px;
+    max-width: 100%;
+  }
+
+  .interactive-carousel-wrapper {
+    gap: 15px;
+  }
+
+  .interactive-carousel-container {
+    padding: 30px 10px;
+  }
+
+  .marquee-item {
+    width: 200px;
+    height: 160px;
+  }
+
+  .marquee-wrapper {
+    gap: 20px;
+    padding: 0 20px;
+  }
+
+  .marquee-container {
+    padding: 20px 0;
+  }
+}

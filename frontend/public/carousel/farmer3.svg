@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 350">
+  <!-- Background -->
+  <rect width="300" height="350" fill="#C9956B"/>
+  
+  <!-- Sun -->
+  <circle cx="270" cy="40" r="20" fill="#FFD700" opacity="0.8"/>
+  
+  <!-- Wheat stalks at bottom -->
+  <g id="wheat">
+    <line x1="10" y1="280" x2="15" y2="190" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="35" y1="280" x2="33" y2="200" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="60" y1="280" x2="62" y2="210" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="85" y1="280" x2="83" y2="195" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="110" y1="280" x2="112" y2="205" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="135" y1="280" x2="133" y2="215" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="160" y1="280" x2="162" y2="200" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="185" y1="280" x2="183" y2="210" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="210" y1="280" x2="212" y2="195" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="235" y1="280" x2="233" y2="205" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="260" y1="280" x2="262" y2="215" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="285" y1="280" x2="283" y2="200" stroke="#DAA520" stroke-width="2.5"/>
+  </g>
+  
+  <!-- Young man farmer -->
+  <circle cx="70" cy="110" r="30" fill="#E8C4A0"/>
+  
+  <!-- Head -->
+  <circle cx="70" cy="88" r="18" fill="#D4A574"/>
+  
+  <!-- Hair -->
+  <path d="M 52 88 Q 52 70 70 65 Q 88 70 88 88" fill="#4A4A4A"/>
+  
+  <!-- Face -->
+  <circle cx="65" cy="85" r="2" fill="#333"/>
+  <circle cx="75" cy="85" r="2" fill="#333"/>
+  <line x1="70" y1="90" x2="70" y2="93" stroke="#333" stroke-width="1.5"/>
+  <path d="M 68 96 Q 70 98 72 96" stroke="#333" stroke-width="1" fill="none"/>
+  
+  <!-- Body/Shirt -->
+  <ellipse cx="70" cy="120" rx="16" ry="20" fill="#7CB342"/>
+  
+  <!-- Arms -->
+  <line x1="55" y1="118" x2="35" y2="110" stroke="#D4A574" stroke-width="3"/>
+  <line x1="85" y1="118" x2="105" y2="110" stroke="#D4A574" stroke-width="3"/>
+  
+  <!-- Hands -->
+  <circle cx="35" cy="110" r="3" fill="#D4A574"/>
+  <circle cx="105" cy="110" r="3" fill="#D4A574"/>
+  
+  <!-- Text -->
+  <text x="150" y="65" font-size="19" font-weight="bold" fill="#2C3E50">
+    Young Farmer
+  </text>
+  <text x="150" y="95" font-size="13" fill="#2C3E50">
+    Technology-Driven Agriculture
+  </text>
+  <text x="150" y="115" font-size="12" fill="#666">
+    Blending traditional wisdom
+  </text>
+  <text x="150" y="133" font-size="12" fill="#666">
+    with modern methods
+  </text>
+  <text x="150" y="165" font-size="13" font-weight="bold" fill="#2C3E50">
+    Growing organic crops
+  </text>
+  <text x="150" y="185" font-size="13" font-weight="bold" fill="#2C3E50">
+    for future generations
+  </text>
+  
+  <!-- Award star -->
+  <text x="265" y="55" font-size="28">⭐</text>
+</svg>

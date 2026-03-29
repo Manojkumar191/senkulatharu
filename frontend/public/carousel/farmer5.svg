@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 350">
+  <!-- Background -->
+  <rect width="300" height="350" fill="#D4956B"/>
+  
+  <!-- Sky gradient effect -->
+  <rect y="0" width="300" height="150" fill="#E8D5C4" opacity="0.5"/>
+  
+  <!-- Wheat stalks at bottom -->
+  <g id="wheat">
+    <line x1="12" y1="280" x2="10" y2="200" stroke="#DAA520" stroke-width="2"/>
+    <line x1="35" y1="280" x2="37" y2="210" stroke="#DAA520" stroke-width="2"/>
+    <line x1="58" y1="280" x2="56" y2="220" stroke="#DAA520" stroke-width="2"/>
+    <line x1="81" y1="280" x2="83" y2="200" stroke="#DAA520" stroke-width="2"/>
+    <line x1="104" y1="280" x2="102" y2="210" stroke="#DAA520" stroke-width="2"/>
+    <line x1="127" y1="280" x2="129" y2="220" stroke="#DAA520" stroke-width="2"/>
+    <line x1="150" y1="280" x2="148" y2="200" stroke="#DAA520" stroke-width="2"/>
+    <line x1="173" y1="280" x2="175" y2="210" stroke="#DAA520" stroke-width="2"/>
+    <line x1="196" y1="280" x2="194" y2="220" stroke="#DAA520" stroke-width="2"/>
+    <line x1="219" y1="280" x2="221" y2="200" stroke="#DAA520" stroke-width="2"/>
+    <line x1="242" y1="280" x2="240" y2="210" stroke="#DAA520" stroke-width="2"/>
+    <line x1="265" y1="280" x2="267" y2="220" stroke="#DAA520" stroke-width="2"/>
+    <line x1="288" y1="280" x2="286" y2="200" stroke="#DAA520" stroke-width="2"/>
+  </g>
+  
+  <!-- Farmer with hoe/plow -->
+  <g id="farmer-working">
+    <!-- Head -->
+    <circle cx="75" cy="90" r="18" fill="#D4A574"/>
+    
+    <!-- Face -->
+    <circle cx="70" cy="87" r="2" fill="#333"/>
+    <circle cx="80" cy="87" r="2" fill="#333"/>
+    <line x1="75" y1="92" x2="75" y2="95" stroke="#333" stroke-width="1"/>
+    <path d="M 73 98 Q 75 100 77 98" stroke="#333" stroke-width="1" fill="none"/>
+    
+    <!-- Headwrap/turbban -->
+    <ellipse cx="75" cy="80" rx="20" ry="8" fill="#8B4513"/>
+    <path d="M 55 82 Q 58 78 75 75 Q 92 78 95 82" fill="#A0522D"/>
+    
+    <!-- Body -->
+    <polygon points="75,110 55,120 55,145 95,145 95,120" fill="#5D4E37"/>
+    
+    <!-- Arms -->
+    <line x1="55" y1="125" x2="30" y2="140" stroke="#D4A574" stroke-width="3"/>
+    <line x1="95" y1="125" x2="120" y2="140" stroke="#D4A574" stroke-width="3"/>
+    
+    <!-- Hoe/Tool -->
+    <line x1="28" y1="140" x2="25" y2="200" stroke="#8B4513" stroke-width="3"/>
+    <circle cx="28" cy="140" r="2.5" fill="#D4A574"/>
+    <!-- Hoe blade -->
+    <rect x="20" y="195" width="10" height="4" fill="#666" transform="rotate(30 25 197)"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="150" y="65" font-size="18" font-weight="bold" fill="#2C3E50">
+    Hardworking Farmer
+  </text>
+  <text x="150" y="95" font-size="13" fill="#2C3E50">
+    Daily Cultivation Work
+  </text>
+  <text x="150" y="115" font-size="12" fill="#666">
+    Tilling soil and planting
+  </text>
+  <text x="150" y="133" font-size="12" fill="#666">
+    seeds with dedication
+  </text>
+  <text x="150" y="165" font-size="13" font-weight="bold" fill="#2C3E50">
+    Building sustainable
+  </text>
+  <text x="150" y="185" font-size="13" font-weight="bold" fill="#2C3E50">
+    livelihoods daily
+  </text>
+  
+  <!-- Award star -->
+  <text x="270" y="55" font-size="28">💪</text>
+</svg>

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 350">
+  <!-- Background -->
+  <rect width="300" height="350" fill="#CD9B5F"/>
+  
+  <!-- Soil/field -->
+  <rect y="250" width="300" height="100" fill="#8B7355"/>
+  
+  <!-- Wheat stalks at bottom -->
+  <g id="wheat">
+    <line x1="15" y1="280" x2="18" y2="170" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="40" y1="280" x2="38" y2="180" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="65" y1="280" x2="68" y2="190" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="90" y1="280" x2="88" y2="175" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="115" y1="280" x2="118" y2="185" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="140" y1="280" x2="138" y2="195" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="165" y1="280" x2="168" y2="180" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="190" y1="280" x2="188" y2="190" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="215" y1="280" x2="218" y2="175" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="240" y1="280" x2="238" y2="185" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="265" y1="280" x2="268" y2="195" stroke="#DAA520" stroke-width="2.5"/>
+    <line x1="290" y1="280" x2="288" y2="180" stroke="#DAA520" stroke-width="2.5"/>
+  </g>
+  
+  <!-- Elderly farmer with walking stick -->
+  <g id="farmer">
+    <!-- Body -->
+    <ellipse cx="70" cy="120" rx="14" ry="25" fill="#8B4513"/>
+    
+    <!-- Head -->
+    <circle cx="70" cy="85" r="17" fill="#D4A574"/>
+    
+    <!-- Hair (grey) -->
+    <path d="M 53 85 Q 53 68 70 63 Q 87 68 87 85" fill="#A9A9A9"/>
+    
+    <!-- Face -->
+    <circle cx="65" cy="82" r="1.8" fill="#333"/>
+    <circle cx="75" cy="82" r="1.8" fill="#333"/>
+    <path d="M 65 87 L 75 87" stroke="#333" stroke-width="1"/>
+    <path d="M 68 91 Q 70 93 72 91" stroke="#9B6B47" stroke-width="1" fill="none"/>
+    
+    <!-- Wrinkles/age -->
+    <path d="M 55 80 Q 58 82 55 85" stroke="#999" stroke-width="0.8" fill="none" opacity="0.6"/>
+    <path d="M 85 80 Q 82 82 85 85" stroke="#999" stroke-width="0.8" fill="none" opacity="0.6"/>
+    
+    <!-- Walking stick -->
+    <line x1="50" y1="140" x2="35" y2="200" stroke="#654321" stroke-width="3"/>
+    <circle cx="35" cy="200" r="2.5" fill="#654321"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="145" y="60" font-size="18" font-weight="bold" fill="#2C3E50">
+    Senior Farmer
+  </text>
+  <text x="145" y="90" font-size="13" fill="#2C3E50">
+    40+ Years Experience
+  </text>
+  <text x="145" y="110" font-size="12" fill="#666">
+    Guardian of agricultural
+  </text>
+  <text x="145" y="128" font-size="12" fill="#666">
+    heritage & traditions
+  </text>
+  <text x="145" y="160" font-size="13" font-weight="bold" fill="#2C3E50">
+    Mentoring new generation
+  </text>
+  <text x="145" y="180" font-size="13" font-weight="bold" fill="#2C3E50">
+    of dryland farmers
+  </text>
+  
+  <!-- Award star -->
+  <text x="268" y="50" font-size="30">👑</text>
+</svg>
