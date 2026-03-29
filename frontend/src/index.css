@@ -18,6 +18,13 @@ body {
   color: #6b4f3a;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+}
+
 html {
   scroll-behavior: smooth;
 }
