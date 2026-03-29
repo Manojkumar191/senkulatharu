@@ -2,13 +2,36 @@ import { useState, useEffect } from 'react'
 import { Page } from '../App'
 import { getCarouselImages, getDefaultCarouselImages } from '../api/carousel'
 
+const TOP_CAROUSEL_CACHE_KEY = 'senkulatharu_top_carousel_cache'
+const MARQUEE_CAROUSEL_CACHE_KEY = 'senkulatharu_marquee_carousel_cache'
+
+const readCarouselCache = (key: string): string[] => {
+  try {
+    const raw = sessionStorage.getItem(key)
+    if (!raw) return []
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed.filter((v) => typeof v === 'string' && v.trim().length > 0) : []
+  } catch {
+    return []
+  }
+}
+
+const writeCarouselCache = (key: string, images: string[]) => {
+  try {
+    sessionStorage.setItem(key, JSON.stringify(images))
+  } catch {
+    // Ignore cache write failures (private mode/storage limits).
+  }
+}
+
 interface HomeProps {
   onNavigate: (page: Page) => void
 }
 
 export default function Home({ onNavigate }: HomeProps) {
-  const [topCarouselImages, setTopCarouselImages] = useState<string[]>([])
-  const [marqueeImages, setMarqueeImages] = useState<string[]>([])
+  const [topCarouselImages, setTopCarouselImages] = useState<string[]>(() => readCarouselCache(TOP_CAROUSEL_CACHE_KEY))
+  const [marqueeImages, setMarqueeImages] = useState<string[]>(() => readCarouselCache(MARQUEE_CAROUSEL_CACHE_KEY))
+  const [isCarouselLoaded, setIsCarouselLoaded] = useState(false)
 
   // State for interactive carousel
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -33,9 +56,13 @@ export default function Home({ onNavigate }: HomeProps) {
         ])
         setTopCarouselImages(topImages)
         setMarqueeImages(movingImages)
+        writeCarouselCache(TOP_CAROUSEL_CACHE_KEY, topImages)
+        writeCarouselCache(MARQUEE_CAROUSEL_CACHE_KEY, movingImages)
       } catch {
         setTopCarouselImages([])
         setMarqueeImages([])
+      } finally {
+        setIsCarouselLoaded(true)
       }
     }
 
@@ -89,10 +116,12 @@ export default function Home({ onNavigate }: HomeProps) {
                 alt={`Farmer ${currentIndex + 1}`}
                 className="carousel-image"
               />
-            ) : (
+            ) : isCarouselLoaded ? (
               <div className="w-full h-full flex items-center justify-center text-center text-sm text-brown/80 px-4">
                 Carousel is empty. Admin can upload images.
               </div>
+            ) : (
+              <div className="w-full h-full" />
             )}
           </div>
 
@@ -156,10 +185,12 @@ export default function Home({ onNavigate }: HomeProps) {
                 />
               </div>
             ))
-          ) : (
+          ) : isCarouselLoaded ? (
             <div className="w-full py-8 text-center text-sm text-brown/80">
               Moving carousel is empty. Admin can upload images.
             </div>
+          ) : (
+            <div className="w-full py-8" />
           )}
         </div>
       </section>
