@@ -151,18 +151,18 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-sand to-amber-50 py-16 md:py-24">
+      <section className="bg-gradient-to-br from-sand to-amber-50 py-20 md:py-28">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-6xl font-bold text-brown mb-4">
+          <h2 className="text-5xl md:text-7xl font-bold text-brown mb-5">
             SENKULATHARU
           </h2>
-          <p className="text-xl md:text-2xl text-forest-green italic mb-6">
+          <p className="text-2xl md:text-3xl text-forest-green italic mb-7">
             இது உதிரத்தில் இணைத்த உழவு
           </p>
-          <p className="text-lg text-brown mb-4">
+          <p className="text-xl md:text-2xl text-brown mb-5">
             Honest food from the dryland farms of Kadavur
           </p>
-          <p className="text-base text-gray-700 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Naturally grown produce sourced from small, marginal and women farmers.
             Direct from farm to your table, supporting sustainable agriculture.
           </p>
@@ -196,30 +196,48 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* Categories Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-brown/5 to-forest-green/5">
+      <section className="py-20 md:py-28 bg-gradient-to-br from-brown/5 to-forest-green/5">
         <div className="container mx-auto px-4">
-          <h3 className="text-3xl font-bold text-brown mb-12 text-center">
+          <h3 className="text-4xl md:text-5xl font-bold text-brown mb-14 text-center">
             Product Categories
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category) => (
               <div
                 key={category.id}
-                className="card-hover p-8 bg-white rounded-lg shadow-md text-center cursor-pointer hover:shadow-lg"
+                className="card-hover p-9 md:p-10 bg-white rounded-lg shadow-md text-center cursor-pointer hover:shadow-lg min-h-[250px] flex flex-col items-center justify-center"
                 onClick={() => onNavigate('products')}
               >
-                <div className="text-5xl mb-4">{category.icon}</div>
-                <h4 className="text-lg font-bold text-brown mb-2">
+                <div className="text-6xl mb-5">{category.icon}</div>
+                <h4 className="text-xl md:text-2xl font-bold text-brown mb-3">
                   {category.name}
                 </h4>
                 {category.badge && (
-                  <span className="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-semibold rounded-full">
+                  <span className="inline-block px-4 py-1.5 bg-amber-100 text-amber-800 text-sm font-semibold rounded-full">
                     {category.badge}
                   </span>
                 )}
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 md:py-24 bg-forest-green text-sand">
+        <div className="container mx-auto px-4 text-center">
+          <h3 className="text-3xl md:text-4xl font-bold mb-6">
+            Ready to taste authentic dryland produce?
+          </h3>
+          <p className="text-lg mb-8 opacity-90">
+            Browse our products and order directly via WhatsApp
+          </p>
+          <button
+            onClick={() => onNavigate('products')}
+            className="btn-primary text-lg px-8 py-3"
+          >
+            Browse Products
+          </button>
         </div>
       </section>
 
@@ -261,24 +279,6 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-forest-green text-sand">
-        <div className="container mx-auto px-4 text-center">
-          <h3 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to taste authentic dryland produce?
-          </h3>
-          <p className="text-lg mb-8 opacity-90">
-            Browse our products and order directly via WhatsApp
-          </p>
-          <button
-            onClick={() => onNavigate('products')}
-            className="btn-primary text-lg px-8 py-3"
-          >
-            Browse Products
-          </button>
         </div>
       </section>
     </div>
