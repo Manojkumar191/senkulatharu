@@ -86,6 +86,12 @@ export default function Home({ onNavigate }: HomeProps) {
 
   // Create duplicate images for seamless marquee loop
   const extendedImages = [...marqueeImages, ...marqueeImages]
+  const marqueeProductNames = [
+    'Heritage Rices',
+    'Wheat Grains & Flours',
+    'Cold-Pressed Oils',
+    'Forest Honey & Herbs',
+  ]
 
   const categories = [
     { id: 1, name: 'Rice, Millets & Dal', icon: '🌾' },
@@ -216,11 +222,14 @@ export default function Home({ onNavigate }: HomeProps) {
                 <img
                   src={image}
                   alt={`Product showcase ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="marquee-item-image"
                   onError={(e) => {
                     e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22250%22 height=%22200%22%3E%3Crect fill=%22%235a7d7c%22 width=%22250%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2216%22 fill=%22%23fff%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EProduct Image%3C/text%3E%3C/svg%3E'
                   }}
                 />
+                <div className="marquee-product-name">
+                  {marqueeProductNames[index % marqueeProductNames.length]}
+                </div>
               </div>
             ))
           ) : isCarouselLoaded ? (
