@@ -20,8 +20,8 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
           />
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-brown">SENKULATHARU</h1>
-            <p className="text-base text-forest-green italic">இது உதிரத்தில் இணைத்த உழவு</p>
-            <p className="text-sm text-gray-600 mt-1">Honest food from the dryland farms of Kadavur</p>
+            <p className="text-base text-forest-green font-semibold italic">இது உதிரத்தில் இணைத்த உழவு</p>
+            <p className="text-sm text-slate-700 font-medium mt-1">Honest food from the dryland farms of Kadavur</p>
           </div>
         </div>
 

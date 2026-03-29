@@ -94,6 +94,44 @@ export default function Home({ onNavigate }: HomeProps) {
     { id: 4, name: 'Garden kits', icon: '🌱' },
   ]
 
+  const feedbacks = [
+    {
+      id: 1,
+      line1: 'The millet quality is excellent and very fresh.',
+      line2: 'Packing was neat and delivery was on time.',
+      line3: 'My family loved the taste.',
+      name: 'Karthik R.',
+    },
+    {
+      id: 2,
+      line1: 'Authentic products just like village-grown food.',
+      line2: 'Clean grains and natural aroma in every batch.',
+      line3: 'Highly recommended for healthy cooking.',
+      name: 'Priya S.',
+    },
+    {
+      id: 3,
+      line1: 'Customer support was very friendly and helpful.',
+      line2: 'Received exactly what was shown in the catalog.',
+      line3: 'Will continue ordering regularly.',
+      name: 'Mohan V.',
+    },
+    {
+      id: 4,
+      line1: 'The honey was pure and naturally sweet.',
+      line2: 'No artificial taste, very genuine quality.',
+      line3: 'Worth every rupee.',
+      name: 'Anitha K.',
+    },
+  ]
+
+  const feedbackImagePool = marqueeImages.length > 0 ? marqueeImages : topCarouselImages
+
+  const movingFeedbacks = [...feedbacks, ...feedbacks].map((feedback, index) => ({
+    ...feedback,
+    imageUrl: feedbackImagePool.length > 0 ? feedbackImagePool[index % feedbackImagePool.length] : '',
+  }))
+
   return (
     <div className="space-y-0">
       {/* Interactive Carousel Banner */}
@@ -159,10 +197,10 @@ export default function Home({ onNavigate }: HomeProps) {
           <p className="text-2xl md:text-3xl text-forest-green italic mb-7">
             இது உதிரத்தில் இணைத்த உழவு
           </p>
-          <p className="text-xl md:text-2xl text-brown mb-5">
+          <p className="text-xl md:text-2xl text-brown font-semibold mb-5">
             Honest food from the dryland farms of Kadavur
           </p>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-brown/90 font-medium max-w-3xl mx-auto leading-relaxed">
             Naturally grown produce sourced from small, marginal and women farmers.
             Direct from farm to your table, supporting sustainable agriculture.
           </p>
@@ -279,6 +317,36 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Feedback Section */}
+      <section className="feedback-marquee-container">
+        <div className="container mx-auto px-4">
+          <h3 className="text-3xl md:text-4xl font-bold text-sand text-center mb-8">
+            Customer Feedback
+          </h3>
+        </div>
+        <div className="feedback-marquee-wrapper">
+          {movingFeedbacks.map((feedback, index) => (
+            <div key={`${feedback.id}-${index}`} className="feedback-card">
+              <div className="feedback-card-content">
+                {feedback.imageUrl && (
+                  <img
+                    src={feedback.imageUrl}
+                    alt={`${feedback.name} review`}
+                    className="feedback-card-image"
+                  />
+                )}
+                <div className="feedback-card-text">
+                  <p>{feedback.line1}</p>
+                  <p>{feedback.line2}</p>
+                  <p>{feedback.line3}</p>
+                  <span>{feedback.name}</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </div>

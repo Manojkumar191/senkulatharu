@@ -65,6 +65,47 @@ html {
   object-fit: cover;
 }
 
+/* Feedback Marquee */
+.feedback-marquee-container {
+  overflow: hidden;
+  background: linear-gradient(135deg, #5a7d7c 0%, #6d8f8e 100%);
+  padding: 42px 0;
+}
+
+.feedback-marquee-wrapper {
+  display: flex;
+  gap: 22px;
+  padding: 0 22px;
+  animation: feedbackMarquee 42s linear infinite;
+}
+
+.feedback-card {
+  flex-shrink: 0;
+  width: 360px;
+  min-height: 190px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #4a3a2a;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  padding: 18px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feedback-card p {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.feedback-card span {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #5a7d7c;
+}
+
 /* Hover Effects */
 .card-hover {
   transition: all 0.3s ease-in-out;
@@ -206,6 +247,15 @@ html {
   }
 }
 
+@keyframes feedbackMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 .fade-in {
   animation: fadeIn 0.6s ease-in-out;
 }
@@ -243,5 +293,28 @@ html {
 
   .marquee-container {
     padding: 28px 0;
+  }
+
+  .feedback-marquee-container {
+    padding: 30px 0;
+  }
+
+  .feedback-marquee-wrapper {
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  .feedback-card {
+    width: 280px;
+    min-height: 170px;
+    padding: 14px;
+  }
+
+  .feedback-card p {
+    font-size: 0.86rem;
+  }
+
+  .feedback-card span {
+    font-size: 0.82rem;
   }
 }
