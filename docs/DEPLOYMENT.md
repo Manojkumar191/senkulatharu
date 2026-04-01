@@ -47,6 +47,12 @@ VITE_ADMIN_PASSWORD=your_secure_password_here
    - Add:
      - Key: `VITE_API_URL`
      - Value: `https://your-backend-url.onrender.com`
+    - Add:
+       - Key: `VITE_SUPABASE_URL`
+       - Value: `https://your-project-id.supabase.co`
+    - Add:
+       - Key: `VITE_SUPABASE_ANON_KEY`
+       - Value: `your_supabase_anon_key`
    - Add:
      - Key: `VITE_ADMIN_PASSWORD`
      - Value: `your_secure_password`
@@ -92,11 +98,12 @@ web: gunicorn app:create_app()
 2. Sign up (preferably with GitHub)
 3. Click **New +** → **Web Service**
 4. Select your GitHub repository
-5. Configure service:
+5. Configure service (or use repo blueprint via `render.yaml`):
    - **Name**: `senkulatharu-api`
    - **Environment**: `Python 3`
    - **Region**: Choose closest to users
    - **Branch**: `main`
+   - **Root Directory**: `backend`
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `gunicorn app:create_app()`
 
