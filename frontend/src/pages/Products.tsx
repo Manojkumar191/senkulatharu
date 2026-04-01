@@ -70,39 +70,52 @@ export default function Products() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sand to-amber-50 py-12">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200 py-12">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-brown mb-4">
-            Our Products
-          </h1>
-          <p className="text-lg text-gray-700">
-            Direct from dryland farms to your table. Click "Order via WhatsApp" to place your order.
-          </p>
+        <div className="mb-10 flex flex-col gap-3">
+          <div className="floating-badge w-fit">
+            <span className="badge-dot" aria-hidden />
+            Dryland pantry and farm tools
+          </div>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-brown">Our Products</h1>
+              <p className="text-lg text-brown/75 max-w-2xl">
+                Direct from Kadavur farms. Order via WhatsApp to reserve the freshest batches.
+              </p>
+            </div>
+            <div className="hidden md:flex items-center gap-3 text-sm text-brown/70">
+              <div className="divider-dot" aria-hidden />
+              Packed slow • Shipped fresh
+            </div>
+          </div>
         </div>
 
         {/* Search Bar */}
-        <div className="mb-8">
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-6 py-3 rounded-lg border-2 border-brown/20 focus:outline-none focus:border-forest-green text-brown placeholder-gray-500"
-          />
+        <div className="mb-8 glass-surface rounded-2xl p-4 shadow-sage">
+          <div className="flex items-center gap-3 border border-brown/10 rounded-xl px-4 py-3 bg-white/70">
+            <span className="text-brown/60" aria-hidden>🔎</span>
+            <input
+              type="text"
+              placeholder="Search grains, oils, honey, tools..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-transparent focus:outline-none text-brown placeholder-brown/50"
+            />
+          </div>
         </div>
 
         {!loading && products.length > 0 && (
-          <div className="mb-8 bg-white rounded-xl p-4 md:p-6 shadow-sm border border-brown/10">
-            <h2 className="text-lg md:text-xl font-bold text-brown mb-4">Product Categories</h2>
+          <div className="mb-8 glass-surface rounded-2xl p-5 shadow-sage border border-brown/10">
+            <h2 className="text-lg md:text-xl font-bold text-brown mb-4">Product categories</h2>
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => setSelectedCategory('All')}
-                className={`px-4 py-2 rounded-full border text-sm font-semibold transition-all ${
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${
                   selectedCategory === 'All'
-                    ? 'bg-forest-green text-white border-forest-green'
-                    : 'bg-sand/40 text-brown border-brown/20 hover:bg-sand'
+                    ? 'bg-forest-green text-white shadow-amber'
+                    : 'bg-white text-brown border border-brown/15 hover:border-forest-green/40'
                 }`}
               >
                 All ({getCategoryCount('All')})
@@ -111,10 +124,10 @@ export default function Products() {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-full border text-sm font-semibold transition-all ${
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${
                     selectedCategory === category
-                      ? 'bg-forest-green text-white border-forest-green'
-                      : 'bg-sand/40 text-brown border-brown/20 hover:bg-sand'
+                      ? 'bg-forest-green text-white shadow-amber'
+                      : 'bg-white text-brown border border-brown/15 hover:border-forest-green/40'
                   }`}
                 >
                   {category} ({getCategoryCount(category)})
@@ -133,26 +146,21 @@ export default function Products() {
 
         {/* Empty State */}
         {!loading && products.length === 0 && (
-          <div className="bg-white rounded-lg p-12 text-center">
-            <p className="text-lg text-gray-600 mb-4">
-              No products available yet.
-            </p>
-            <p className="text-sm text-gray-500">
-              Check back soon for fresh produce from our farmers!
-            </p>
+          <div className="glass-surface rounded-2xl p-12 text-center shadow-sage">
+            <p className="text-lg text-brown mb-4">No products available yet.</p>
+            <p className="text-sm text-brown/70">Check back soon for fresh produce from our farmers!</p>
           </div>
         )}
 
         {/* Products Grid */}
         {!loading && filteredProducts.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 mb-12">
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="card-hover bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl"
+                className="tilt-card bg-white/80 border border-brown/10 rounded-2xl overflow-hidden shadow-lg"
               >
-                {/* Product Image */}
-                <div className="h-64 overflow-hidden bg-gray-200">
+                <div className="relative h-64 bg-emerald-50 overflow-hidden">
                   <img
                     src={product.image_url}
                     alt={product.name}
@@ -161,41 +169,31 @@ export default function Products() {
                       e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2220%22 fill=%22%23999%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EProduct Image%3C/text%3E%3C/svg%3E'
                     }}
                   />
-                </div>
-
-                {/* Product Info */}
-                <div className="p-6">
-                  <div className="mb-3 flex flex-wrap gap-2">
-                    <span className="inline-block px-3 py-1 rounded-full bg-sand text-brown text-xs font-semibold">
+                  <div className="absolute inset-0 bg-gradient-to-t from-brown/70 to-transparent" />
+                  <div className="absolute left-4 bottom-4 flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-full bg-white/90 text-xs font-semibold text-brown">
                       {parseTaggedCategory(product.description)}
                     </span>
-                    <span className="inline-block px-3 py-1 rounded-full bg-amber-100 text-brown text-xs font-semibold">
+                    <span className="px-3 py-1 rounded-full bg-emerald-200/90 text-xs font-semibold text-brown">
                       Stock: {parseTaggedStock(product.description)}
                     </span>
                   </div>
+                </div>
 
-                  <h3 className="text-xl font-bold text-brown mb-2">
-                    {product.name}
-                  </h3>
-
-                  <p className="text-gray-700 text-sm mb-4 line-clamp-3">
+                <div className="p-6 space-y-3">
+                  <h3 className="text-xl font-bold text-brown">{product.name}</h3>
+                  <p className="text-brown/70 text-sm leading-relaxed line-clamp-3">
                     {stripMetaTags(product.description)}
                   </p>
-
-                  {/* Price and Action */}
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-bold text-forest-green">
-                      ₹{product.price}
-                    </span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold text-forest-green">₹{product.price}</span>
+                    <button
+                      onClick={() => handleWhatsAppOrder(product)}
+                      className="px-4 py-2 rounded-lg bg-gradient-to-r from-forest-green to-emerald-500 text-white font-semibold shadow-amber"
+                    >
+                      WhatsApp order
+                    </button>
                   </div>
-
-                  <button
-                    onClick={() => handleWhatsAppOrder(product)}
-                    className="btn-whatsapp w-full justify-center"
-                  >
-                    <span>💬</span>
-                    Order via WhatsApp
-                  </button>
                 </div>
               </div>
             ))}
@@ -204,10 +202,8 @@ export default function Products() {
 
         {/* No Search Results */}
         {!loading && products.length > 0 && filteredProducts.length === 0 && (
-          <div className="bg-white rounded-lg p-12 text-center">
-            <p className="text-lg text-gray-600">
-              No products found matching "{searchTerm}"
-            </p>
+          <div className="glass-surface rounded-2xl p-12 text-center shadow-sage">
+            <p className="text-lg text-brown">No products found matching "{searchTerm}"</p>
           </div>
         )}
       </div>

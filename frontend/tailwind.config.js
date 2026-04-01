@@ -6,9 +6,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brown: '#6B4F3A',
-        sand: '#F5E9DA',
-        'forest-green': '#5A7D7C',
+        brown: '#1D3A2C',
+        sand: '#EAF7EF',
+        'forest-green': '#1B9F72',
+        clay: '#2A5B46',
+        cream: '#F3FBF6',
+        moss: '#62B78D',
+        sun: '#9CD27B',
       },
       animation: {
         'marquee': 'marquee 40s linear infinite',

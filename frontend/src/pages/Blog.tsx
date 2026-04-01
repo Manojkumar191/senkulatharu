@@ -74,72 +74,59 @@ export default function Blog() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sand to-amber-50 py-16 md:py-24">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="mb-16 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-brown mb-4">
-            Stories from Kadavur
-          </h1>
-          <p className="text-lg text-gray-700">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200 py-16 md:py-24">
+      <div className="max-w-5xl mx-auto px-4 md:px-6">
+        <div className="text-center mb-14 space-y-4 reveal-stagger delay-1">
+          <div className="floating-badge w-fit mx-auto reveal-stagger delay-2">
+            <span className="badge-dot" aria-hidden />
+            Field notes and stories
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-brown reveal-stagger delay-3">Stories from Kadavur</h1>
+          <p className="text-lg text-brown/75 max-w-2xl mx-auto reveal-stagger delay-4">
             Tales of tradition, sustainability, and the farmers who make it happen
           </p>
         </div>
 
-        {/* Stories Grid */}
         <div className="space-y-8 max-w-4xl mx-auto">
-          {stories.map((story) => (
+          {stories.map((story, index) => (
             <article
               key={story.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden card-hover"
+              className={`glass-surface rounded-2xl shadow-sage overflow-hidden tilt-card soft-card-hover blog-article ${
+                index % 2 === 0 ? 'blog-card-enter-left' : 'blog-card-enter-right'
+              }`}
+              style={{ animationDelay: `${0.15 + index * 0.1}s` }}
             >
-              <div className="p-8">
-                {/* Meta Information */}
-                <div className="flex items-center gap-4 mb-3">
-                  <span className="text-sm text-gray-500">📅 {story.date}</span>
+              <div className="p-8 space-y-4">
+                <div className="flex items-center gap-3 text-sm text-brown/90 font-semibold">
+                  <span className="badge-dot" aria-hidden />
+                  <span>📅 {story.date}</span>
                 </div>
-
-                {/* Title */}
-                <h2 className="text-2xl md:text-3xl font-bold text-brown mb-4">
-                  {story.title}
-                </h2>
-
-                {/* Excerpt */}
-                <p className="text-gray-700 mb-4 italic border-l-4 border-forest-green pl-4">
+                <h2 className="text-2xl md:text-3xl font-bold text-brown">{story.title}</h2>
+                <p className="text-brown font-semibold border-l-4 border-forest-green/60 pl-4">
                   {story.excerpt}
                 </p>
-
-                {/* Full Content */}
-                <div className="prose prose-sm max-w-none text-gray-700 whitespace-pre-line leading-relaxed">
+                <div className="max-w-none text-brown font-semibold whitespace-pre-line leading-relaxed">
                   {story.content}
                 </div>
-
-                {/* Read More Button */}
-                <button className="mt-6 text-forest-green font-semibold hover:text-brown transition-colors">
-                  Continue reading →
-                </button>
               </div>
             </article>
           ))}
         </div>
 
-        {/* Newsletter Section */}
-        <section className="mt-16 bg-brown text-sand rounded-lg p-8 max-w-2xl mx-auto text-center">
-          <h3 className="text-2xl font-bold mb-3">
-            Get Stories in Your Inbox
-          </h3>
-          <p className="mb-6 opacity-90">
+        <section className="mt-16 bg-gradient-to-r from-forest-green to-emerald-600 text-sand rounded-2xl p-10 shadow-amber max-w-3xl mx-auto text-center reveal-stagger soft-card-hover" style={{ animationDelay: '0.6s' }}>
+          <h3 className="text-2xl font-bold mb-3">Get Stories in Your Inbox</h3>
+          <p className="mb-6 font-medium" style={{ color: '#ffffff' }}>
             Subscribe to receive stories from our farmers, tips on dryland farming, and exclusive offers.
           </p>
           <form className="flex flex-col md:flex-row gap-3">
             <input
               type="email"
               placeholder="Your email address"
-              className="flex-1 px-4 py-3 rounded-lg text-brown placeholder-gray-500 focus:outline-none"
+              className="flex-1 px-4 py-3 rounded-lg text-brown placeholder-brown/50 focus:outline-none"
             />
             <button
               type="submit"
-              className="px-6 py-3 bg-forest-green text-sand font-semibold rounded-lg hover:bg-opacity-90 transition-all"
+              className="px-6 py-3 bg-white text-forest-green font-semibold rounded-lg hover:bg-emerald-50 transition-all"
             >
               Subscribe
             </button>

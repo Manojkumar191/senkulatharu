@@ -6,8 +6,9 @@ import Products from './pages/Products'
 import About from './pages/About'
 import Blog from './pages/Blog'
 import Admin from './pages/Admin'
+import Contact from './pages/Contact'
 
-export type Page = 'home' | 'products' | 'about' | 'blog' | 'admin'
+export type Page = 'home' | 'products' | 'about' | 'blog' | 'contact' | 'admin'
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home')
@@ -25,6 +26,7 @@ function App() {
         {currentPage === 'products' && <Products />}
         {currentPage === 'about' && <About />}
         {currentPage === 'blog' && <Blog />}
+        {currentPage === 'contact' && <Contact />}
         {currentPage === 'admin' && <Admin />}
       </main>
       <Footer onNavigate={navigateTo} />

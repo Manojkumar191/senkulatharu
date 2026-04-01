@@ -105,6 +105,53 @@ export default function Home({ onNavigate }: HomeProps) {
     { id: 4, name: 'Garden kits', icon: '🌱' },
   ]
 
+  const valuePillars = [
+    {
+      title: 'Farm-first sourcing',
+      copy: 'Harvested in small batches, shade-dried, and packed without additives.',
+      icon: '🌾',
+    },
+    {
+      title: 'Slow-crafted oils',
+      copy: 'Cold-pressed gingelly, groundnut, and coconut oils that keep nutrients intact.',
+      icon: '🛢️',
+    },
+    {
+      title: 'Forest pantry',
+      copy: 'Wild honey, sundakai, and herbs gathered responsibly by women farmer collectives.',
+      icon: '🍯',
+    },
+    {
+      title: 'Grower tools',
+      copy: 'Garden kits, seed starters, and soil boosters that help you grow at home.',
+      icon: '🧺',
+    },
+  ]
+
+  const statHighlights = [
+    { label: 'Heritage grains', value: '40+' },
+    { label: 'Farmer families', value: '80+' },
+    { label: 'Cold-pressed oils', value: '6' },
+  ]
+
+  const farmTools = [
+    {
+      title: 'Clay pot fermenters',
+      detail: 'Hold probiotics longer and keep flavors earthy and clean.',
+      tone: 'from-emerald-100 to-green-50',
+    },
+    {
+      title: 'Seed starter trays',
+      detail: 'Kickstart kitchen gardens with moisture-lock cocopeat.',
+      tone: 'from-emerald-50 to-white',
+    },
+    {
+      title: 'Stone grinders',
+      detail: 'Slow grinding retains aroma for masalas and millet flours.',
+      tone: 'from-teal-100 to-emerald-50',
+    },
+  ]
+
   const feedbacks = [
     {
       id: 1,
@@ -136,85 +183,105 @@ export default function Home({ onNavigate }: HomeProps) {
     },
   ]
 
-  const feedbackImagePool = marqueeImages.length > 0 ? marqueeImages : topCarouselImages
-
-  const movingFeedbacks = [...feedbacks, ...feedbacks].map((feedback, index) => ({
-    ...feedback,
-    imageUrl: feedbackImagePool.length > 0 ? feedbackImagePool[index % feedbackImagePool.length] : '',
-  }))
+  const movingFeedbacksForward = [...feedbacks, ...feedbacks]
 
   return (
-    <div className="space-y-0">
-      {/* Interactive Carousel Banner */}
-      <section className="interactive-carousel-container">
-        <div className="interactive-carousel-wrapper">
-          {/* Previous Button */}
-          <button
-            onClick={handlePrev}
-            className="carousel-button carousel-button-prev"
-            aria-label="Previous farmer"
-          >
-            ‹
-          </button>
+    <div className="space-y-0 page-shell">
+      {/* Hero */}
+      <section className="relative overflow-hidden py-16 md:py-24 bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200">
+        <div className="radial-spot -left-16 top-6" aria-hidden />
+        <div className="radial-spot sun right-0 -top-10" aria-hidden />
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10 grid md:grid-cols-2 gap-10 items-center">
+          <div className="space-y-6 relative anim-rise">
+            <div className="floating-badge floating w-fit anim-fade">
+              <span className="badge-dot" aria-hidden />
+              Farm-to-table • Kadavur
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold leading-tight text-clay anim-rise">
+              Honest food and tools crafted by dryland farmers.
+            </h1>
+            <p className="text-lg md:text-xl text-brown/80 leading-relaxed max-w-xl anim-fade">
+              Grains, oils, forest honey, and garden tools gathered with care by small and women farmers.
+              Packed slow, shipped fresh.
+            </p>
+            <div className="cta-grid max-w-xl anim-rise">
+              <button
+                onClick={() => onNavigate('products')}
+                className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-white font-semibold shadow-amber bg-gradient-to-r from-forest-green to-emerald-500 hover:opacity-95 hover:-translate-y-0.5 transition-all duration-300"
+              >
+                Browse farm produce
+              </button>
+              <button
+                onClick={() => onNavigate('about')}
+                className="cta-ghost flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-clay font-semibold hover:-translate-y-0.5 transition-all duration-300"
+              >
+                Meet our farmers
+              </button>
+            </div>
 
-          {/* Image Display */}
-          <div className="carousel-image-container">
-            {topCarouselImages.length > 0 ? (
-              <img
-                src={topCarouselImages[currentIndex]}
-                alt={`Farmer ${currentIndex + 1}`}
-                className="carousel-image"
-              />
-            ) : isCarouselLoaded ? (
-              <div className="w-full h-full flex items-center justify-center text-center text-sm text-brown/80 px-4">
-                Carousel is empty. Admin can upload images.
-              </div>
-            ) : (
-              <div className="w-full h-full" />
-            )}
-          </div>
-
-          {/* Next Button */}
-          <button
-            onClick={handleNext}
-            className="carousel-button carousel-button-next"
-            aria-label="Next farmer"
-          >
-            ›
-          </button>
-
-          {/* Dots Indicator */}
-          {topCarouselImages.length > 0 && (
-            <div className="carousel-dots">
-              {topCarouselImages.map((_, index) => (
-                <button
-                  key={index}
-                  className={`carousel-dot ${index === currentIndex ? 'active' : ''}`}
-                  onClick={() => setCurrentIndex(index)}
-                  aria-label={`Go to farmer ${index + 1}`}
-                />
+            <div className="grid grid-cols-3 gap-3 max-w-lg anim-fade">
+              {statHighlights.map((stat) => (
+                <div key={stat.label} className="glass-surface rounded-xl p-3 shadow-sage text-center hover:-translate-y-1 transition-transform duration-300">
+                  <div className="text-2xl font-bold text-forest-green">{stat.value}</div>
+                  <div className="text-xs uppercase text-brown/70 tracking-wide">{stat.label}</div>
+                </div>
               ))}
             </div>
-          )}
+          </div>
+
+          <div className="relative flow-card glass-surface glow-border rounded-3xl shadow-sage p-3 anim-rise">
+            <div className="absolute -left-10 top-8 w-24 h-24 bg-gradient-to-br from-emerald-100 to-green-300 rounded-full opacity-35" aria-hidden />
+            <div className="absolute -right-6 -bottom-8 w-24 h-24 bg-gradient-to-br from-emerald-100 to-white rounded-full opacity-40" aria-hidden />
+            <div className="relative rounded-2xl overflow-hidden shadow-lg">
+              {topCarouselImages.length > 0 ? (
+                <img
+                  src={topCarouselImages[currentIndex]}
+                  alt={`Field ${currentIndex + 1}`}
+                  className="w-full h-[360px] md:h-[420px] object-cover"
+                />
+              ) : (
+                <div className="w-full h-[360px] md:h-[420px] bg-gradient-to-br from-emerald-100 via-green-50 to-teal-100 pattern-grid flex items-center justify-center text-brown/60">
+                  Farmer images will appear here
+                </div>
+              )}
+              <div className="absolute left-4 top-4 px-3 py-2 rounded-full bg-white/85 text-xs font-semibold shadow-sm flex items-center gap-2">
+                <span className="badge-dot" aria-hidden />
+                Live field spotlight
+              </div>
+              <div className="absolute right-4 bottom-4 bg-white/85 backdrop-blur-sm px-4 py-3 rounded-xl shadow-md text-sm text-brown/80">
+                <div className="font-semibold">Dryland harvest</div>
+                <div className="text-xs">Sun-kissed grains and heritage seeds</div>
+              </div>
+            </div>
+            <div className="absolute -right-4 -top-6 floating shadow-amber px-3 py-2 rounded-lg bg-white text-sm font-semibold text-forest-green">
+              Fresh batch this week
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-sand to-amber-50 py-20 md:py-28">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl md:text-7xl font-bold text-brown mb-5">
-            SENKULATHARU
-          </h2>
-          <p className="text-2xl md:text-3xl text-forest-green italic mb-7">
-            இது உதிரத்தில் இணைத்த உழவு
+      {/* Pillars */}
+      <section className="py-16 md:py-24 bg-emerald-50/80">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10">
+          <div className="flex items-center gap-3 mb-10">
+            <div className="divider-dot" aria-hidden />
+            <span className="uppercase text-xs tracking-[0.2em] text-brown/70">Crafted with care</span>
+          </div>
+          <h3 className="text-4xl md:text-5xl font-bold text-brown mb-6">Everything from our farms</h3>
+          <p className="text-lg text-brown/80 max-w-3xl mb-10">
+            We grow, harvest, cold-press, and hand-pack. Add farm tools to your kitchen and balcony gardens to keep the story going.
           </p>
-          <p className="text-xl md:text-2xl text-brown font-semibold mb-5">
-            Honest food from the dryland farms of Kadavur
-          </p>
-          <p className="text-lg text-brown/90 font-medium max-w-3xl mx-auto leading-relaxed">
-            Naturally grown produce sourced from small, marginal and women farmers.
-            Direct from farm to your table, supporting sustainable agriculture.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {valuePillars.map((item) => (
+              <div key={item.title} className="tilt-card glass-surface rounded-2xl p-6 shadow-sage flex gap-4 items-start anim-rise">
+                <div className="text-3xl" aria-hidden>{item.icon}</div>
+                <div>
+                  <h4 className="text-xl font-bold text-brown mb-2">{item.title}</h4>
+                  <p className="text-brown/80 leading-relaxed">{item.copy}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -248,119 +315,84 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* Categories Section */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-brown/5 to-forest-green/5">
-        <div className="container mx-auto px-4">
-          <h3 className="text-4xl md:text-5xl font-bold text-brown mb-14 text-center">
-            Product Categories
-          </h3>
+      <section className="py-16 md:py-24 bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10">
+          <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
+            <div>
+              <div className="section-heading">
+                <span className="tagline text-xs text-brown/70">shop by range</span>
+                <h3 className="text-3xl md:text-4xl font-bold text-brown">Farm pantry and tools</h3>
+              </div>
+              <p className="text-brown/80 mt-3 max-w-2xl">
+                Pick a lane: grains and millets, forest pantry essentials, slow oils, or ready-to-grow garden kits.
+              </p>
+            </div>
+            <button
+              onClick={() => onNavigate('products')}
+              className="shine px-4 py-2 rounded-lg bg-forest-green text-white font-semibold shadow-amber"
+            >
+              Explore catalog
+            </button>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category) => (
               <div
                 key={category.id}
-                className="card-hover p-9 md:p-10 bg-white rounded-lg shadow-md text-center cursor-pointer hover:shadow-lg min-h-[250px] flex flex-col items-center justify-center"
+                className="tilt-card bg-white rounded-2xl shadow-lg border border-brown/10 p-6 flex flex-col gap-4 cursor-pointer anim-rise"
                 onClick={() => onNavigate('products')}
               >
-                <div className="text-6xl mb-5">{category.icon}</div>
-                <h4 className="text-xl md:text-2xl font-bold text-brown mb-3">
-                  {category.name}
-                </h4>
-                {category.badge && (
-                  <span className="inline-block px-4 py-1.5 bg-amber-100 text-amber-800 text-sm font-semibold rounded-full">
-                    {category.badge}
-                  </span>
-                )}
+                <div className="flex items-center justify-between">
+                  <span className="text-3xl" aria-hidden>{category.icon}</span>
+                  {category.badge && (
+                    <span className="px-3 py-1 text-xs font-bold rounded-full bg-emerald-100 text-brown">{category.badge}</span>
+                  )}
+                </div>
+                <h4 className="text-xl font-bold text-brown">{category.name}</h4>
+                <p className="text-sm text-brown/70">Sourced directly, cleaned and packed with no additives.</p>
+                <div className="flex items-center gap-2 text-forest-green font-semibold text-sm">
+                  <span>View products</span>
+                  <span aria-hidden>{'>'}</span>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-forest-green text-sand">
-        <div className="container mx-auto px-4 text-center">
-          <h3 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to taste authentic dryland produce?
-          </h3>
-          <p className="text-lg mb-8 opacity-90">
-            Browse our products and order directly via WhatsApp
-          </p>
-          <button
-            onClick={() => onNavigate('products')}
-            className="btn-primary text-lg px-8 py-3"
-          >
-            Browse Products
-          </button>
-        </div>
-      </section>
-
-      {/* Description Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <h3 className="text-3xl font-bold text-brown mb-6 text-center">
-              Why Choose Senkulatharu?
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="card-hover p-8 md:p-10 bg-sand rounded-lg min-h-[210px]">
-                <div className="text-5xl mb-4">🌱</div>
-                <h4 className="text-2xl font-bold text-brown mb-3">Naturally Grown</h4>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  No chemical inputs. Pure, organic farming methods from generations of dryland farming knowledge.
-                </p>
+      {/* Tools and kits */}
+      <section className="py-14 md:py-20 bg-emerald-50/85">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="badge-dot" aria-hidden />
+            <span className="text-sm font-bold text-brown/90">Farm tools for your kitchen</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {farmTools.map((tool) => (
+              <div key={tool.title} className={`tilt-card rounded-2xl p-6 shadow-sage bg-gradient-to-br ${tool.tone} anim-rise`}>
+                <h4 className="text-xl font-extrabold text-brown mb-2">{tool.title}</h4>
+                <p className="text-brown/90 font-semibold leading-relaxed">{tool.detail}</p>
               </div>
-              <div className="card-hover p-8 md:p-10 bg-sand rounded-lg min-h-[210px]">
-                <div className="text-5xl mb-4">👨‍🌾</div>
-                <h4 className="text-2xl font-bold text-brown mb-3">Direct from Farmers</h4>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  Support small, marginal and women farmers. Fair prices, direct relationships.
-                </p>
-              </div>
-              <div className="card-hover p-8 md:p-10 bg-sand rounded-lg min-h-[210px]">
-                <div className="text-5xl mb-4">🏜️</div>
-                <h4 className="text-2xl font-bold text-brown mb-3">Dryland Farming</h4>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  Sustainable agriculture adapted to Kadavur's climate. Water-efficient and eco-friendly.
-                </p>
-              </div>
-              <div className="card-hover p-8 md:p-10 bg-sand rounded-lg min-h-[210px]">
-                <div className="text-5xl mb-4">✨</div>
-                <h4 className="text-2xl font-bold text-brown mb-3">Premium Quality</h4>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  Carefully harvested and processed. Maintains nutritional value and authentic taste.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Feedback Section */}
       <section className="feedback-marquee-container">
-        <div className="container mx-auto px-4">
-          <h3 className="text-3xl md:text-4xl font-bold text-sand text-center mb-8">
-            Customer Feedback
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10">
+          <h3 className="text-2xl md:text-3xl font-bold text-sand text-center mb-4">
+            What Our Customers Say
           </h3>
         </div>
-        <div className="feedback-marquee-wrapper">
-          {movingFeedbacks.map((feedback, index) => (
-            <div key={`${feedback.id}-${index}`} className="feedback-card">
-              <div className="feedback-card-content">
-                {feedback.imageUrl && (
-                  <img
-                    src={feedback.imageUrl}
-                    alt={`${feedback.name} review`}
-                    className="feedback-card-image"
-                  />
-                )}
-                <div className="feedback-card-text">
-                  <p>{feedback.line1}</p>
-                  <p>{feedback.line2}</p>
-                  <p>{feedback.line3}</p>
-                  <span>{feedback.name}</span>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="feedback-track-shell">
+          <div className="feedback-marquee-wrapper">
+            {movingFeedbacksForward.map((feedback, index) => (
+              <article key={`forward-${feedback.id}-${index}`} className="feedback-card">
+                <p className="feedback-text">{`${feedback.line1} ${feedback.line2} ${feedback.line3}`}</p>
+                <span className="feedback-author">{feedback.name}</span>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </div>
