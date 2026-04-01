@@ -4,6 +4,10 @@ from flask_cors import CORS
 from config import Config
 from routes import bp
 
+
+def _normalize_origin(origin: str) -> str:
+    return (origin or '').strip().rstrip('/')
+
 def create_app():
     """Create and configure Flask app."""
     app = Flask(__name__)
@@ -14,8 +18,9 @@ def create_app():
 
     @app.after_request
     def add_cors_headers(response):
-        origin = request.headers.get('Origin', '')
-        if origin in Config.CORS_ORIGINS or origin.startswith('http://localhost:'):
+        origin = _normalize_origin(request.headers.get('Origin', ''))
+        is_vercel_domain = origin.endswith('.vercel.app')
+        if origin in Config.CORS_ORIGINS or origin.startswith('http://localhost:') or is_vercel_domain:
             response.headers['Access-Control-Allow-Origin'] = origin
             response.headers['Vary'] = 'Origin'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Admin-Password'

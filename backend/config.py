@@ -25,4 +25,5 @@ class Config:
     IMAGE_QUALITY = 60
     
     # CORS
-    CORS_ORIGINS = os.getenv('CORS_ORIGINS', 'http://localhost:5173,https://yourdomain.com').split(',')
+    _raw_cors = os.getenv('CORS_ORIGINS', 'http://localhost:5173,https://yourdomain.com')
+    CORS_ORIGINS = [origin.strip().rstrip('/') for origin in _raw_cors.split(',') if origin.strip()]
