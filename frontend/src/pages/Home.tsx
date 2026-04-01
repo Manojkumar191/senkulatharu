@@ -49,18 +49,23 @@ export default function Home({ onNavigate }: HomeProps) {
 
   useEffect(() => {
     const loadCarouselImages = async () => {
+      const fallbackImages = getDefaultCarouselImages()
       try {
         const [topImages, movingImages] = await Promise.all([
           getCarouselImages('top'),
           getCarouselImages('marquee'),
         ])
-        setTopCarouselImages(topImages)
-        setMarqueeImages(movingImages)
-        writeCarouselCache(TOP_CAROUSEL_CACHE_KEY, topImages)
-        writeCarouselCache(MARQUEE_CAROUSEL_CACHE_KEY, movingImages)
+        const safeTopImages = topImages.length > 0 ? topImages : fallbackImages
+        const safeMarqueeImages = movingImages.length > 0 ? movingImages : fallbackImages
+        setTopCarouselImages(safeTopImages)
+        setMarqueeImages(safeMarqueeImages)
+        writeCarouselCache(TOP_CAROUSEL_CACHE_KEY, safeTopImages)
+        writeCarouselCache(MARQUEE_CAROUSEL_CACHE_KEY, safeMarqueeImages)
       } catch {
-        setTopCarouselImages([])
-        setMarqueeImages([])
+        setTopCarouselImages(fallbackImages)
+        setMarqueeImages(fallbackImages)
+        writeCarouselCache(TOP_CAROUSEL_CACHE_KEY, fallbackImages)
+        writeCarouselCache(MARQUEE_CAROUSEL_CACHE_KEY, fallbackImages)
       } finally {
         setIsCarouselLoaded(true)
       }
