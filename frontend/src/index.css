@@ -227,10 +227,18 @@ html {
 .anim-fade {
   animation: fade 0.6s ease-out forwards;
 }
+.tilt-card-lite {
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
 
 .reveal-stagger {
   opacity: 0;
   animation: rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.tilt-card-lite:hover,
+.tilt-card-lite:focus-within {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(47, 36, 31, 0.12);
 }
 
 .delay-1 {
@@ -719,13 +727,16 @@ html {
   }
 
   .soft-card-hover,
-  .tilt-card {
+  .tilt-card,
+  .tilt-card-lite {
     transition: none;
   }
 
   .soft-card-hover:hover,
   .soft-card-hover:focus-within,
-  .tilt-card:hover {
+  .tilt-card:hover,
+  .tilt-card-lite:hover,
+  .tilt-card-lite:focus-within {
     transform: none;
     box-shadow: inherit;
   }

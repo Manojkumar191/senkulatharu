@@ -492,7 +492,7 @@ export default function Home({ onNavigate }: HomeProps) {
             {categories.map((category) => (
               <div
                 key={category.id}
-                className="tilt-card bg-white rounded-2xl shadow-lg border border-brown/10 p-6 flex flex-col gap-4 cursor-pointer anim-rise"
+                className="tilt-card-lite bg-white rounded-2xl shadow-lg border border-brown/10 p-6 flex flex-col gap-4 cursor-pointer anim-rise"
                 onClick={() => onNavigate('products')}
               >
                 <div className="flex items-center justify-between">
