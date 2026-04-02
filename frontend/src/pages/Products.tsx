@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Product, getProducts } from '../api/products'
 
+const PRODUCT_SEARCH_PREFILL_KEY = 'senkulatharu_products_search_prefill'
+
 const parseTaggedCategory = (description: string): string => {
   const match = description.match(/\[Category:\s*([^\]]+)\]/i)
   return match ? match[1].trim() : 'Others'
@@ -28,6 +30,13 @@ export default function Products() {
 
   useEffect(() => {
     loadProducts()
+  }, [])
+
+  useEffect(() => {
+    const prefill = sessionStorage.getItem(PRODUCT_SEARCH_PREFILL_KEY)
+    if (!prefill) return
+    setSearchTerm(prefill)
+    sessionStorage.removeItem(PRODUCT_SEARCH_PREFILL_KEY)
   }, [])
 
   useEffect(() => {
@@ -70,14 +79,10 @@ export default function Products() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200 pt-4 md:pt-6 pb-12">
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10">
         {/* Header */}
         <div className="mb-10 flex flex-col gap-3">
-          <div className="floating-badge w-fit">
-            <span className="badge-dot" aria-hidden />
-            Dryland pantry and farm tools
-          </div>
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-brown">Our Products</h1>

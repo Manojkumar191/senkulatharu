@@ -74,13 +74,9 @@ export default function Blog() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200 py-16 md:py-24">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200 pt-4 md:pt-6 pb-16 md:pb-24">
       <div className="max-w-5xl mx-auto px-4 md:px-6">
         <div className="text-center mb-14 space-y-4 reveal-stagger delay-1">
-          <div className="floating-badge w-fit mx-auto reveal-stagger delay-2">
-            <span className="badge-dot" aria-hidden />
-            Field notes and stories
-          </div>
           <h1 className="text-4xl md:text-5xl font-bold text-brown reveal-stagger delay-3">Stories from Kadavur</h1>
           <p className="text-lg text-brown/75 max-w-2xl mx-auto reveal-stagger delay-4">
             Tales of tradition, sustainability, and the farmers who make it happen

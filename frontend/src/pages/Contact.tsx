@@ -53,19 +53,15 @@ const faqs = [
   {
     question: 'Can I return a product?',
     answer:
-      'Unopened products can be returned within 7 days with the original receipt. Some electrical items have specific return policies.',
+      'Unopened products can be returned within 7 days with the original receipt. Some items have specific return policies.',
   },
 ]
 
 export default function Contact() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200 py-14 md:py-20">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200 pt-4 md:pt-6 pb-14 md:pb-20">
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10 space-y-7">
         <div className="text-center space-y-4 reveal-stagger delay-1">
-          <div className="floating-badge w-fit mx-auto reveal-stagger delay-2">
-            <span className="badge-dot" aria-hidden />
-            Contact and Support
-          </div>
           <h1 className="text-4xl md:text-5xl font-bold text-brown reveal-stagger delay-3">Get in Touch</h1>
           <p className="text-lg text-brown/85 font-semibold max-w-2xl mx-auto reveal-stagger delay-4">
             Reach us for product enquiries, bulk orders, delivery support, and business partnerships.

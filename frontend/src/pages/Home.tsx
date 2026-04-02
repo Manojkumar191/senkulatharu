@@ -1,9 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useRef, type TouchEvent } from 'react'
 import { Page } from '../App'
 import { getCarouselImages, getDefaultCarouselImages } from '../api/carousel'
+import { getProducts } from '../api/products'
 
 const TOP_CAROUSEL_CACHE_KEY = 'senkulatharu_top_carousel_cache'
 const MARQUEE_CAROUSEL_CACHE_KEY = 'senkulatharu_marquee_carousel_cache'
+const PRODUCT_SEARCH_PREFILL_KEY = 'senkulatharu_products_search_prefill'
+const MIN_SWIPE_DISTANCE = 35
+const MARQUEE_SPEED_PX_PER_SECOND = 42
+
+interface DisplayMarqueeItem {
+  id: string
+  name: string
+  imageUrl: string
+  fromProduct: boolean
+}
 
 const readCarouselCache = (key: string): string[] => {
   try {
@@ -31,7 +42,16 @@ interface HomeProps {
 export default function Home({ onNavigate }: HomeProps) {
   const [topCarouselImages, setTopCarouselImages] = useState<string[]>(() => readCarouselCache(TOP_CAROUSEL_CACHE_KEY))
   const [marqueeImages, setMarqueeImages] = useState<string[]>(() => readCarouselCache(MARQUEE_CAROUSEL_CACHE_KEY))
+  const [marqueeProducts, setMarqueeProducts] = useState<Array<{ id: string; name: string; imageUrl: string }>>([])
   const [isCarouselLoaded, setIsCarouselLoaded] = useState(false)
+  const [marqueeOffset, setMarqueeOffset] = useState(0)
+  const [marqueeDirection, setMarqueeDirection] = useState<-1 | 1>(-1)
+  const [isMarqueePaused, setIsMarqueePaused] = useState(false)
+  const touchStartXRef = useRef<number | null>(null)
+  const trackRef = useRef<HTMLDivElement | null>(null)
+  const cycleWidthRef = useRef(0)
+  const animationFrameRef = useRef<number | null>(null)
+  const lastFrameTimeRef = useRef<number | null>(null)
 
   // State for interactive carousel
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -51,19 +71,30 @@ export default function Home({ onNavigate }: HomeProps) {
     const loadCarouselImages = async () => {
       const fallbackImages = getDefaultCarouselImages()
       try {
-        const [topImages, movingImages] = await Promise.all([
+        const [topImages, movingImages, products] = await Promise.all([
           getCarouselImages('top'),
           getCarouselImages('marquee'),
+          getProducts(),
         ])
         const safeTopImages = topImages.length > 0 ? topImages : fallbackImages
         const safeMarqueeImages = movingImages.length > 0 ? movingImages : fallbackImages
+        const normalizedProducts = products
+          .filter((product) => typeof product.name === 'string' && product.name.trim().length > 0)
+          .filter((product) => typeof product.image_url === 'string' && product.image_url.trim().length > 0)
+          .map((product) => ({
+            id: product.id,
+            name: product.name,
+            imageUrl: product.image_url,
+          }))
         setTopCarouselImages(safeTopImages)
         setMarqueeImages(safeMarqueeImages)
+        setMarqueeProducts(normalizedProducts)
         writeCarouselCache(TOP_CAROUSEL_CACHE_KEY, safeTopImages)
         writeCarouselCache(MARQUEE_CAROUSEL_CACHE_KEY, safeMarqueeImages)
       } catch {
         setTopCarouselImages(fallbackImages)
         setMarqueeImages(fallbackImages)
+        setMarqueeProducts([])
         writeCarouselCache(TOP_CAROUSEL_CACHE_KEY, fallbackImages)
         writeCarouselCache(MARQUEE_CAROUSEL_CACHE_KEY, fallbackImages)
       } finally {
@@ -89,14 +120,126 @@ export default function Home({ onNavigate }: HomeProps) {
     setCurrentIndex((prev) => (prev + 1) % topCarouselImages.length)
   }
 
-  // Create duplicate images for seamless marquee loop
-  const extendedImages = [...marqueeImages, ...marqueeImages]
   const marqueeProductNames = [
     'Heritage Rices',
     'Wheat Grains & Flours',
     'Cold-Pressed Oils',
     'Forest Honey & Herbs',
   ]
+
+  const marqueeItems = useMemo<DisplayMarqueeItem[]>(() => {
+    if (marqueeProducts.length > 0) {
+      return marqueeProducts.map((product) => ({
+        id: product.id,
+        name: product.name,
+        imageUrl: product.imageUrl,
+        fromProduct: true,
+      }))
+    }
+
+    return marqueeImages.map((image, index) => ({
+      id: `fallback-${index}`,
+      name: marqueeProductNames[index % marqueeProductNames.length],
+      imageUrl: image,
+      fromProduct: false,
+    }))
+  }, [marqueeImages, marqueeProductNames, marqueeProducts])
+
+  const duplicatedMarqueeItems = useMemo(() => {
+    return [...marqueeItems, ...marqueeItems]
+  }, [marqueeItems])
+
+  useEffect(() => {
+    const recalculateCycleWidth = () => {
+      if (!trackRef.current || marqueeItems.length === 0) {
+        cycleWidthRef.current = 0
+        setMarqueeOffset(0)
+        return
+      }
+
+      cycleWidthRef.current = trackRef.current.scrollWidth / 2
+      setMarqueeOffset((prev) => {
+        const cycle = cycleWidthRef.current
+        if (!cycle) return 0
+        if (prev <= -cycle || prev >= 0) {
+          return -Math.abs(prev % cycle)
+        }
+        return prev
+      })
+    }
+
+    recalculateCycleWidth()
+    window.addEventListener('resize', recalculateCycleWidth)
+    return () => window.removeEventListener('resize', recalculateCycleWidth)
+  }, [marqueeItems.length])
+
+  useEffect(() => {
+    if (isMarqueePaused || marqueeItems.length === 0 || cycleWidthRef.current <= 0) {
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current)
+      }
+      animationFrameRef.current = null
+      lastFrameTimeRef.current = null
+      return
+    }
+
+    const animate = (timestamp: number) => {
+      if (lastFrameTimeRef.current === null) {
+        lastFrameTimeRef.current = timestamp
+      }
+
+      const deltaMs = timestamp - lastFrameTimeRef.current
+      const deltaPx = (deltaMs / 1000) * MARQUEE_SPEED_PX_PER_SECOND * marqueeDirection
+      const cycle = cycleWidthRef.current
+
+      setMarqueeOffset((prev) => {
+        let next = prev + deltaPx
+        if (cycle > 0) {
+          while (next <= -cycle) next += cycle
+          while (next > 0) next -= cycle
+        }
+        return next
+      })
+
+      lastFrameTimeRef.current = timestamp
+      animationFrameRef.current = requestAnimationFrame(animate)
+    }
+
+    animationFrameRef.current = requestAnimationFrame(animate)
+
+    return () => {
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current)
+      }
+      animationFrameRef.current = null
+      lastFrameTimeRef.current = null
+    }
+  }, [isMarqueePaused, marqueeDirection, marqueeItems.length])
+
+  const handleMarqueeTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = event.touches[0]?.clientX ?? null
+  }
+
+  const handleMarqueeTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    const startX = touchStartXRef.current
+    const endX = event.changedTouches[0]?.clientX ?? null
+    touchStartXRef.current = null
+
+    if (startX === null || endX === null) return
+
+    const deltaX = endX - startX
+    if (Math.abs(deltaX) < MIN_SWIPE_DISTANCE) return
+
+    setMarqueeDirection(deltaX < 0 ? -1 : 1)
+    setIsMarqueePaused(false)
+  }
+
+  const handleMarqueeItemClick = (item: DisplayMarqueeItem) => {
+    if (item.fromProduct) {
+      sessionStorage.setItem(PRODUCT_SEARCH_PREFILL_KEY, item.name)
+    }
+    onNavigate('products')
+  }
 
   const categories = [
     { id: 1, name: 'Rice, Millets & Dal', icon: '🌾' },
@@ -188,15 +331,11 @@ export default function Home({ onNavigate }: HomeProps) {
   return (
     <div className="space-y-0 page-shell">
       {/* Hero */}
-      <section className="relative overflow-hidden py-16 md:py-24 bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200">
+      <section className="relative overflow-hidden pt-5 md:pt-8 pb-20 md:pb-28 bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200">
         <div className="radial-spot -left-16 top-6" aria-hidden />
         <div className="radial-spot sun right-0 -top-10" aria-hidden />
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10 grid md:grid-cols-2 gap-10 items-center">
           <div className="space-y-6 relative anim-rise">
-            <div className="floating-badge floating w-fit anim-fade">
-              <span className="badge-dot" aria-hidden />
-              Farm-to-table • Kadavur
-            </div>
             <h1 className="text-5xl md:text-6xl font-bold leading-tight text-clay anim-rise">
               Honest food and tools crafted by dryland farmers.
             </h1>
@@ -237,10 +376,10 @@ export default function Home({ onNavigate }: HomeProps) {
                 <img
                   src={topCarouselImages[currentIndex]}
                   alt={`Field ${currentIndex + 1}`}
-                  className="w-full h-[360px] md:h-[420px] object-cover"
+                  className="w-full h-[400px] md:h-[480px] object-cover"
                 />
               ) : (
-                <div className="w-full h-[360px] md:h-[420px] bg-gradient-to-br from-emerald-100 via-green-50 to-teal-100 pattern-grid flex items-center justify-center text-brown/60">
+                <div className="w-full h-[400px] md:h-[480px] bg-gradient-to-br from-emerald-100 via-green-50 to-teal-100 pattern-grid flex items-center justify-center text-brown/60">
                   Farmer images will appear here
                 </div>
               )}
@@ -261,7 +400,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* Pillars */}
-      <section className="py-16 md:py-24 bg-emerald-50/80">
+      <section className="pt-0 pb-16 md:pb-24 bg-emerald-50/80">
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10">
           <div className="flex items-center gap-3 mb-10">
             <div className="divider-dot" aria-hidden />
@@ -287,23 +426,38 @@ export default function Home({ onNavigate }: HomeProps) {
 
       {/* Marquee Banner */}
       <section className="marquee-container">
-        <div className="marquee-wrapper">
-          {extendedImages.length > 0 ? (
-            extendedImages.map((image, index) => (
-              <div key={index} className="marquee-item">
-                <img
-                  src={image}
-                  alt={`Product showcase ${index + 1}`}
-                  className="marquee-item-image"
-                  onError={(e) => {
-                    e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22250%22 height=%22200%22%3E%3Crect fill=%22%235a7d7c%22 width=%22250%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2216%22 fill=%22%23fff%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EProduct Image%3C/text%3E%3C/svg%3E'
-                  }}
-                />
-                <div className="marquee-product-name">
-                  {marqueeProductNames[index % marqueeProductNames.length]}
-                </div>
-              </div>
-            ))
+        <div
+          className="marquee-track-shell"
+          onMouseEnter={() => setIsMarqueePaused(true)}
+          onMouseLeave={() => setIsMarqueePaused(false)}
+          onTouchStart={handleMarqueeTouchStart}
+          onTouchEnd={handleMarqueeTouchEnd}
+        >
+          {duplicatedMarqueeItems.length > 0 ? (
+            <div
+              ref={trackRef}
+              className="marquee-wrapper"
+              style={{ transform: `translateX(${marqueeOffset}px)` }}
+            >
+              {duplicatedMarqueeItems.map((item, index) => (
+                <button
+                  key={`${item.id}-${index}`}
+                  type="button"
+                  className="marquee-item marquee-item-button"
+                  onClick={() => handleMarqueeItemClick(item)}
+                >
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className="marquee-item-image"
+                    onError={(e) => {
+                      e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22250%22 height=%22200%22%3E%3Crect fill=%22%235a7d7c%22 width=%22250%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2216%22 fill=%22%23fff%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EProduct Image%3C/text%3E%3C/svg%3E'
+                    }}
+                  />
+                  <div className="marquee-product-name">{item.name}</div>
+                </button>
+              ))}
+            </div>
           ) : isCarouselLoaded ? (
             <div className="w-full py-8 text-center text-sm text-brown/80">
               Moving carousel is empty. Admin can upload images.
@@ -315,7 +469,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* Categories Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200">
+      <section className="pt-0 pb-16 md:pb-24 bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200">
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10">
           <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
             <div>
@@ -360,7 +514,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* Tools and kits */}
-      <section className="py-14 md:py-20 bg-emerald-50/85">
+      <section className="pt-0 pb-14 md:pb-20 bg-emerald-50/85">
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10">
           <div className="flex items-center gap-3 mb-6">
             <div className="badge-dot" aria-hidden />

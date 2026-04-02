@@ -22,11 +22,11 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
     <header className="sticky top-0 z-50 border-b border-brown/10 bg-white/85 backdrop-blur-md shadow-[0_8px_22px_rgba(29,58,44,0.1)]">
       <div className="max-w-[1440px] mx-auto w-full px-4 md:px-8 lg:px-10 py-3">
         <nav aria-label="Primary navigation" className="flex items-center gap-4">
-          <div className="flex items-center gap-3 min-w-0">
+          <div className="flex items-center gap-3 min-w-[280px] md:min-w-[360px] lg:min-w-[420px]">
             <img
               src="/logo.png"
               alt="Senkulatharu logo"
-              className="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover border border-brown/15 shadow-sm shrink-0"
+              className="w-28 h-16 md:w-32 md:h-20 rounded-lg object-contain shadow-sm shrink-0"
             />
             <div className="min-w-0 leading-tight">
               <h1 className="text-xl md:text-2xl font-bold text-brown tracking-tight truncate">SENKULATHARU</h1>

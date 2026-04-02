@@ -1,12 +1,8 @@
 export default function About() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200">
-      <div className="max-w-5xl mx-auto px-4 md:px-6 py-16 md:py-24 space-y-10">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-green-100 to-emerald-200 pt-4 md:pt-6">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 pt-0 pb-16 md:pb-24 space-y-10">
         <div className="flex flex-col gap-3 reveal-stagger delay-1">
-          <div className="floating-badge w-fit reveal-stagger delay-2">
-            <span className="badge-dot" aria-hidden />
-            Blood-bonded farming • Kadavur
-          </div>
           <h1 className="text-4xl md:text-5xl font-bold text-brown reveal-stagger delay-3">About Senkulatharu</h1>
           <p className="text-lg text-brown/75 max-w-3xl reveal-stagger delay-4">
             Understanding our mission and the farmers we support

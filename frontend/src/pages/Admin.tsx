@@ -461,7 +461,7 @@ export default function Admin() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-cream to-emerald-100 flex items-center justify-center py-12">
+      <div className="min-h-screen bg-gradient-to-br from-cream to-emerald-100 flex items-center justify-center pt-4 md:pt-6 pb-12">
         <div className="glass-surface rounded-2xl shadow-sage p-8 w-full max-w-md border border-brown/10">
           <h1 className="text-3xl font-bold text-brown mb-6 text-center">Admin Panel</h1>
           <form onSubmit={handleLogin} className="space-y-4">
@@ -498,7 +498,7 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cream to-emerald-100 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-cream to-emerald-100 pt-4 md:pt-6 pb-8">
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <h1 className="text-4xl font-bold text-brown">Admin Panel</h1>

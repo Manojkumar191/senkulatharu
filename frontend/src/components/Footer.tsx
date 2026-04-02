@@ -45,6 +45,9 @@ export default function Footer({ onNavigate }: FooterProps) {
           <div>
             <h3 className="text-xl font-bold mb-3 text-white">Contact</h3>
             <p className="text-sm text-white font-semibold">
+              NELLU SORU MANUFACTURES AND SERVICES
+            </p>
+            <p className="text-sm text-white font-semibold">
               📧 Email: senkulatharu@gmail.com
             </p>
             <p className="text-sm text-white font-semibold mt-2">
